@@ -7,62 +7,34 @@ public class SoHot {
     public static void main(String[] args) {
 
 
-        int[] scoville = new int[]{1, 2, 3, 9, 10, 12};
+        int[] scoville = new int[]{12, 2, 3, 9, 10, 1};
         int k = 7;
 
-        new SoHot().solution(scoville, k);
+        int ret = new SoHot().solution(scoville, k);
 
-
+        System.out.println(ret);
     }
 
-
-    class Food implements Comparable<Food> {
-        int scoville;
-
-        public Food(int scoville) {
-            this.scoville = scoville;
-        }
-
-        public int getScoville(){
-            return this.scoville;
-        }
-        @Override
-        public int compareTo(Food o) {
-            return this.scoville <= o.scoville ? 1 : -1;
-        }
-    }
 
     public int solution(int[] scoville, int K) {
         int answer = 0;
 
-        PriorityQueue<Food> foodPriorityQueue = new PriorityQueue<>();
-
-        for(int c : scoville){
-            foodPriorityQueue.offer(new Food(c));
+        PriorityQueue<Integer> foodPriorityQueue = new PriorityQueue<>();
+        for (int c : scoville) {
+            foodPriorityQueue.offer(c);
         }
+        while (K >= foodPriorityQueue.peek()) {
 
-        PriorityQueue<Food> sortQueue = new PriorityQueue<>(foodPriorityQueue.size(), Collections.reverseOrder());
-        sortQueue.addAll(foodPriorityQueue);
-
-        int food1 = 0;
-        int food2 = 0;
-
-        while (!sortQueue.isEmpty()){
-
-            food1 = sortQueue.poll().getScoville();
-            food2 = sortQueue.poll().getScoville();
-
-            if (food1 + (food2 * 2) > k){
-
-
-
+            if(foodPriorityQueue.size() == 1){
+                return  -1;
             }
+            int food1 = foodPriorityQueue.poll();
+            int food2 = foodPriorityQueue.poll();
 
-            System.out.println(sortQueue.poll().getScoville());
+            int mergeFood = food1 + (food2 * 2);
+            foodPriorityQueue.offer(mergeFood);
+            answer++;
         }
-
-
-        System.out.println(sortQueue.size());
 
         return answer;
     }
