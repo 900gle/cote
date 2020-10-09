@@ -1,7 +1,6 @@
 package programers.heap;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 public class HardDisk {
@@ -36,33 +35,40 @@ public class HardDisk {
 
     public int solution(int[][] jobs) {
 
-        int tempTime = 0;
-        int totalTime = 0;
         int answer = 0;
+        int end = 0; // 수행되고난 직후의 시간
+        int jobsIdx = 0; // jobs 배열의 인덱스
+        int count = 0; // 수행된 요청 갯수
 
-        PriorityQueue<Work> workPriorityQueue = new PriorityQueue<>();
-        for (int[] ints : jobs) {
-            workPriorityQueue.offer(new Work(ints[0], ints[1]));
-        }
+        // 원본 배열 오름차순 정렬 (요청시간 오름차순)
+        Arrays.sort(jobs, (o1, o2) -> o1[0] - o2[0]);
 
-        List<Work> list = new ArrayList<>();
-        while (!workPriorityQueue.isEmpty()) {
-            list.add(workPriorityQueue.poll());
-        }
+        // 처리 시간 오름차순으로 정렬되는 우선순위 큐(Heap)
+        PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
 
-        while (list.size()>0) {
-            for (int i = 0; i < list.size(); i++) {
-                if (tempTime >= list.get(i).sec) {
-                    tempTime += list.get(i).work;
-                    totalTime += tempTime - list.get(i).sec;
-                    list.remove(i);
-                    break;
-                }
-                if (i == list.size()-1) totalTime++;
+        // 요청이 모두 수행될 때까지 반복
+        while (count < jobs.length) {
+
+            // 하나의 작업이 완료되는 시점(end)까지 들어온 모든 요청을 큐에 넣음
+            while (jobsIdx < jobs.length && jobs[jobsIdx][0] <= end) {
+                pq.add(jobs[jobsIdx++]);
+            }
+
+            // 큐가 비어있다면 작업 완료(end) 이후에 다시 요청이 들어온다는 의미
+            // (end를 요청의 가장 처음으로 맞춰줌)
+            if (pq.isEmpty()) {
+                end = jobs[jobsIdx][0];
+
+                // 작업이 끝나기 전(end 이전) 들어온 요청 중 가장 수행시간이 짧은 요청부터 수행
+            } else {
+
+                int[] temp = pq.poll();
+                answer += temp[1] + end - temp[0];
+                end += temp[1];
+                count++;
             }
         }
 
-        answer  = (int)totalTime/jobs.length;
-        return answer;
+        return (int) Math.floor(answer / jobs.length);
     }
 }
