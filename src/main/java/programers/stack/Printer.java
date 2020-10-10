@@ -1,7 +1,9 @@
 package programers.stack;
 
 //일반적인 프린터는 인쇄 요청이 들어온 순서대로 인쇄합니다.
+
 import java.util.*;
+
 public class Printer {
 
     public static void main(String[] args) {
@@ -14,33 +16,42 @@ public class Printer {
 
     public int solution(int[] priorities, int location) {
 
-
         int answer = 0;
-        int l = location;
+        int loca = location;
 
         Queue<Integer> que = new LinkedList<Integer>();
-        for(int i : priorities){
-            que.add(i);
+        for (int i : priorities) {
+            que.offer(i);
         }
+//        System.out.println("===========================");
+//        Arrays.stream(priorities).forEach(x-> System.out.println(x));
+//        System.out.println("===========================");
 
         Arrays.sort(priorities);
-        int size = priorities.length-1;
+        int size = priorities.length - 1;
+        System.out.println("size =" + size);
 
+//        System.out.println("===========================");
+//        Arrays.stream(priorities).forEach(x-> System.out.println(x));
+//        System.out.println("===========================");
 
+        while (!que.isEmpty()) {
+            Integer pri = que.poll();
+            System.out.println("i : " + pri + " priorities[size - answer] : " + priorities[size - answer]);
 
-        while(!que.isEmpty()){
-            Integer i = que.poll();
-            if(i == priorities[size - answer]){
+            if (pri == priorities[size - answer]) {
                 answer++;
-                l--;
-                if(l <0)
+                loca--;
+                if (loca < 0)
                     break;
-            }else{
-                que.add(i);
-                l--;
-                if(l<0)
-                    l=que.size()-1;
+            } else {
+                que.offer(pri);
+                loca--;
+                if (loca < 0)
+                    loca = que.size() - 1;
             }
+
+            System.out.println("location : " + loca);
         }
 
         return answer;
