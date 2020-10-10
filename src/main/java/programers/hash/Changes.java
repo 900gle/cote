@@ -20,12 +20,12 @@ public class Changes {
     public static int solution(String[][] clothes) {
         int answer = 0;
         HashMap<String, Integer> hm = new HashMap<String, Integer>();
-        Arrays.stream(clothes).forEach(
+        Arrays.stream(clothes).peek(x-> System.out.println("clothes : " + x[0] + " ::: " +x[1])).forEach(
                 x -> {
                     hm.put(x[1], hm.getOrDefault(x[1], 0) + 1);
                 }
         );
-        answer = hm.values().stream().map(x -> x + 1).reduce(1, (a, b) -> a * b) - 1;
+        answer = hm.values().stream().peek(x-> System.out.println("x1  : " + x)).map(x -> x + 1).peek(x-> System.out.println("x2 : " + x)).reduce(1, (a, b) -> a * b) - 1;
         return answer;
     }
 }

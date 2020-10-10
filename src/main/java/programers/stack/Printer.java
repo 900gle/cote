@@ -13,35 +13,36 @@ public class Printer {
     }
 
     public int solution(int[] priorities, int location) {
+
+
         int answer = 0;
-        List<Integer> prior = new ArrayList<Integer>();
-        List<Integer> loc = new ArrayList<Integer>(); // 위치정보 할당.
-        for (int i = 0; i < priorities.length; i++) {
-            prior.add(priorities[i]);
-            loc.add(i);
+        int l = location;
+
+        Queue<Integer> que = new LinkedList<Integer>();
+        for(int i : priorities){
+            que.add(i);
         }
-        int count = 0;
-        while (true) {
-            int l = loc.get(0);
-            int p = prior.get(0);
-            loc.remove(0);
-            prior.remove(0);
-            if (prior.size() == 0) {
-                answer += count + 1;
-                break;
-            } // 꺼낸값보다 우선순위가 높은게 있다면 다시 큐안으로..
-            if (Collections.max(prior) > p) {
-                prior.add(p);
-                loc.add(l);
-            } // 꺼낸값보다 우선순위가 높은게 큐에 없다면 출력
-            else {
-                count += 1;
-                if (location == l) {
-                    answer = count;
+
+        Arrays.sort(priorities);
+        int size = priorities.length-1;
+
+
+
+        while(!que.isEmpty()){
+            Integer i = que.poll();
+            if(i == priorities[size - answer]){
+                answer++;
+                l--;
+                if(l <0)
                     break;
-                }
+            }else{
+                que.add(i);
+                l--;
+                if(l<0)
+                    l=que.size()-1;
             }
         }
+
         return answer;
 
     }
