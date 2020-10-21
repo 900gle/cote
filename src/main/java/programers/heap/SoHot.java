@@ -52,11 +52,11 @@ public class SoHot {
             food1 = sortQueue.poll().getScoville();
             food2 = sortQueue.poll().getScoville();
 
-            if (food1 + (food2 * 2) > k){
-
-
-
-            }
+//            if (food1 + (food2 * 2) > k){
+//
+//
+//
+//            }
 
             System.out.println(sortQueue.poll().getScoville());
         }
