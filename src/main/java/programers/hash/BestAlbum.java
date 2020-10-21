@@ -23,6 +23,12 @@ public class BestAlbum {
         }
 
         List<Map.Entry<String, Integer>> list = new LinkedList<>(rankHash.entrySet());
+
+        list.stream().forEach( x-> System.out.println("entry Set ::: " + x));
+//        entry Set ::: pop=3100
+//        entry Set ::: classic=1450
+
+
         Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
             @Override
             public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
@@ -30,8 +36,10 @@ public class BestAlbum {
                 return comparision == 0 ? o1.getKey().compareTo(o2.getKey()) : comparision;
             }
         });
+
+
         List<Integer> answerList = new ArrayList<>();
-        list.stream().forEach(x -> {
+        list.stream().peek(x-> System.out.println("x ::: " + x)).forEach(x -> {
                     Map<Integer, Integer> tempMap = new HashMap<>();
                     for (int j = 0; j < genres.length; j++) {
                         if (genres[j].equals(x.getKey())) {//
@@ -39,7 +47,13 @@ public class BestAlbum {
                         }
                     }
 
+
+            tempMap.keySet().forEach(k -> System.out.println("K ::: " + k));
+
                     List<Map.Entry<Integer, Integer>> listTemp = new LinkedList<>(tempMap.entrySet());
+
+                    listTemp.forEach(l-> System.out.println("listTemp  " +l));
+
                     Collections.sort(listTemp, new Comparator<Map.Entry<Integer, Integer>>() {
                         @Override
                         public int compare(Map.Entry<Integer, Integer> o1, Map.Entry<Integer, Integer> o2) {

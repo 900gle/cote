@@ -9,11 +9,9 @@ public class StockPrice {
 
         int[] prices = new int[]{1, 2, 3, 2, 3};
 
-       int[] ret = solution(prices);
+        int[] ret = solution(prices);
 
-        Arrays.stream(ret).forEach(x-> System.out.println(x));
-
-
+        Arrays.stream(ret).forEach(x -> System.out.println(x));
     }
 
     public static int[] solution(int[] prices) {
@@ -24,7 +22,10 @@ public class StockPrice {
                     answer[i] = j - i;
                     break;
                 }
-                if(j == answer.length -1) answer[i] = j-i;
+
+                if (j == answer.length - 1) answer[i] = j - i;
+
+                System.out.println("j : " + j + " anserLength : " + (answer.length - 1));
             }
         }
         return answer;

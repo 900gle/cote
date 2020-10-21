@@ -19,10 +19,12 @@ public class Player {
     public static String solution(String[] participant, String[] completion) {
         HashMap<String, Integer> pMap = new HashMap<>();
 
+//        참가자 맵을 만든다 getOrdeffault - 없으면 0 있으면 + 1;
         for (String pName : participant) {
             pMap.put(pName, pMap.getOrDefault(pName, 0) + 1);
         }
 
+//        완주자 배열에서 참가자 맵의 value 값을 가져와서 -1 을 해주면 완주하지 못한놈이 1로 남는 된
         for (String cName : completion) {
             pMap.put(cName, pMap.get(cName) - 1);
         }
@@ -34,6 +36,7 @@ public class Player {
             }
         }
 
+//        0보다 큰놈 추출 그놈이 범인이다.
         return answer;
 
     }

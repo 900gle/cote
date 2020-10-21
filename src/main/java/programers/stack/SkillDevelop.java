@@ -15,23 +15,30 @@ public class SkillDevelop {
         int[] speeds  = new int[]{1, 1, 1, 1, 1, 1};
 
         int[] ret = solution(progresses, speeds);
-
         Arrays.stream(ret).forEach(x-> System.out.println(x));
     }
     public static int[] solution(int[] progresses, int[] speeds) {
 
-
-
         Queue<Integer> queue = new ConcurrentLinkedQueue<>();
+
         for (int i = 0; i < progresses.length; i++) {
             queue.offer(((100 - progresses[i]) % speeds[i] == 0) ? (100 - progresses[i]) / speeds[i] : ((100 - progresses[i]) / speeds[i] + 1));
         }
+
+
+
         int deployCount = 1;
         int prePoll = queue.poll();
+
+
+
 
         ArrayList<Integer> list = new ArrayList<Integer>();
         while (!queue.isEmpty()){
             int nowPoll = queue.poll();
+
+            System.out.println("prePoll :: " + prePoll + "   nowPoll :: " + nowPoll);
+
             if( prePoll >= nowPoll) {
                 deployCount++;
             } else {
