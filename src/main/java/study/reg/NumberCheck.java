@@ -8,8 +8,9 @@ public class NumberCheck {
 
 
         Pattern p = Pattern.compile("^[0-9]{1,10}\\.?[0-9]{1,9}?$");
+//        Pattern p = Pattern.compile("^\\d*(\\.?\\d*)");
 
-        String text = "0.23433424";
+        String text = "2020-01";
 
 
         System.out.println("find : " + p.matcher(text).find());
